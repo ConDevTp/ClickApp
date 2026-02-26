@@ -1,13 +1,28 @@
-import RenderBlock from "@/components/templates/template_1/RenderBlock/RenderBlock";
+// import RenderBlock from "@/components/templates/template_1/RenderBlock/RenderBlock";
 
-const BlockRenderer = ({ CanvasBlocks }) => {
+// const BlockRenderer = ({ CanvasBlocks }) => {
+//   return (
+//     <>
+//       {CanvasBlocks.map((block) => (
+//         <RenderBlock key={block.instanceId} data={block} />
+//       ))}
+//     </>
+//   );
+// };
+
+// export default BlockRenderer;
+
+import RenderBlock from "@/components/templates/template_1/RenderBlock/RenderBlock";
+import { memo } from "react";
+
+const BlockRenderer = ({ blockIds }) => {
   return (
     <>
-      {CanvasBlocks.map((block) => (
-        <RenderBlock key={block.instanceId} data={block} />
+      {blockIds.map((id) => (
+        <RenderBlock key={id} id={id} />
       ))}
     </>
   );
 };
 
-export default BlockRenderer;
+export default memo(BlockRenderer);

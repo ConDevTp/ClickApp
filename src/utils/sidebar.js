@@ -5,9 +5,16 @@ import {
   TextAlign,
 } from "@/components/editor/controls";
 
+// export const InputComponents = {
+//   "background-color": BackgroundColor,
+//   "font-size": FontSize,
+//   color: Color,
+//   "text-align": TextAlign,
+// };
+
 export const InputComponents = {
-  "background-color": BackgroundColor,
-  "font-size": FontSize,
+  backgroundColor: BackgroundColor,
+  fontSize: FontSize,
   color: Color,
-  "text-align": TextAlign,
+  textAlign: TextAlign,
 };

@@ -10,18 +10,24 @@
 //   return <TargetComponent data={data} />;
 // };
 // export default RenderBlock;
-
+import { memo } from "react";
+import { useSelector } from "react-redux";
 import { AllSections } from "..";
 
-const RenderBlock = ({ data }) => {
-  if (!data || !data.type) return <p>دیتا پیدا نشد</p>;
+const RenderBlock = ({ id }) => {
+  // این بلاک فقط وقتی رندر میشه که دیتای خودش توی ریداکس تغییر کنه!
+  const data = useSelector((state) =>
+    state.builder.canvasBlocks.find((b) => b.instanceId === id),
+  );
+
+  if (!data || !data.type) return null;
   const TargetComponent = AllSections[data.type];
 
   return (
-    // این div اضافه شد تا آیدی بلاک رو نگه داره
     <div data-block-id={data.instanceId}>
       <TargetComponent data={data} />
     </div>
   );
 };
-export default RenderBlock;
+
+export default memo(RenderBlock);
