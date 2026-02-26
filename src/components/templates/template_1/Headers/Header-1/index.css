@@ -1,0 +1,5 @@
+.header-theme-1 > * {
+  color: red;
+  background: blue;
+  text-align: center;
+}
