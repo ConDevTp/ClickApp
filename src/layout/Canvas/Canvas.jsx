@@ -8,6 +8,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BlocksWrapper from "./BlocksWrapper";
+import "./index.css";
 
 const EditorCanvas = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +45,7 @@ const EditorCanvas = () => {
 
   return (
     <div
-      className="w-100 h-100 d-flex flex-column align-items-end overflow-y-scroll"
+      className="w-100 h-100 d-flex flex-column align-items-end overflow-y-scroll editor-canvas"
       style={{ maxHeight: "100vh" }}
     >
       <BlocksWrapper />

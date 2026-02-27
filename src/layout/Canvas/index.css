@@ -1,0 +1,3 @@
+.editor-canvas a {
+  pointer-events: none !important;
+}

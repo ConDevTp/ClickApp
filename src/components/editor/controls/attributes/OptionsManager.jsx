@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 const OptionsManager = ({ value, onChange, onSave }) => {
-  // value اینجا یک آرایه است: ["گزینه ۱", "گزینه ۲"]
   const [localOptions, setLocalOptions] = useState(value || []);
 
   useEffect(() => {
@@ -12,14 +11,14 @@ const OptionsManager = ({ value, onChange, onSave }) => {
     const updated = [...localOptions];
     updated[index] = newVal;
     setLocalOptions(updated);
-    onChange(updated); // آپدیت زنده در DOM
+    onChange(updated);
   };
 
   const addOption = () => {
     const updated = [...localOptions, "گزینه جدید"];
     setLocalOptions(updated);
     onChange(updated);
-    onSave(updated); // چون مورد جدید است، مستقیم ذخیره می‌کنیم
+    onSave(updated);
   };
 
   const removeOption = (index) => {
@@ -30,12 +29,12 @@ const OptionsManager = ({ value, onChange, onSave }) => {
   };
 
   return (
-    <div className="options-manager">
+    <div className="w-100">
       {localOptions.map((opt, index) => (
         <div key={index} className="d-flex mb-2">
           <input
             type="text"
-            className="form-control form-control-sm bg-dark text-white"
+            className="form-control form-control-sm"
             value={opt}
             onChange={(e) => updateOption(index, e.target.value)}
             onBlur={() => onSave(localOptions)}
@@ -49,10 +48,10 @@ const OptionsManager = ({ value, onChange, onSave }) => {
         </div>
       ))}
       <button
-        className="btn btn-sm btn-outline-light w-100 mt-2"
+        className="btn btn-sm btn-secondary w-100 mt-2"
         onClick={addOption}
       >
-        + اضافه کردن گزینه
+        +
       </button>
     </div>
   );

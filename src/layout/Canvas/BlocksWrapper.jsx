@@ -29,9 +29,12 @@ const BlocksWrapper = () => {
     if (type === "image") {
       attributes.src = target.src;
       attributes.alt = target.alt;
-    }
-    if (type === "text") {
+    } else if (type === "text") {
       attributes.content = target.innerText;
+    } else if (type === "dropdown") {
+      attributes.options = Array.from(target.querySelectorAll("option")).map(
+        (opt) => opt.value,
+      );
     }
 
     dispatch(

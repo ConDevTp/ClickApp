@@ -16,7 +16,6 @@ const ControlWrapper = memo(
     const value = useSelector(
       (state) => state.builder.clickedItem?.[controlType]?.[fieldName] || "",
     );
-
     const handleLiveUpdate = (newVal) => {
       const targetEl = document.querySelector(
         `[data-block-id="${blockId}"] [data-id="${elementId}"]`,
@@ -26,10 +25,16 @@ const ControlWrapper = memo(
       if (controlType === "styles") {
         targetEl.style[fieldName] = newVal;
       } else {
-        // آپدیت زنده محتوا (مثل متن یا عکس)
         if (fieldName === "content") targetEl.innerText = newVal;
         else if (fieldName === "src") targetEl.src = newVal;
         else if (fieldName === "alt") targetEl.alt = newVal;
+        else if (fieldName === "options") {
+          // به جای دستکاری مستقیم DOM، تغییرات لیست رو مستقیم به ریداکس می‌دیم
+          // تا خود ری‌اکت بدون ارور تگ‌های option رو کم و زیاد کنه
+          dispatch(
+            updateElementAttribute({ blockId, elementId, fieldName, newVal }),
+          );
+        }
       }
     };
 
