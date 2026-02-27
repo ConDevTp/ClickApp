@@ -1,19 +1,18 @@
 export const Hero = ({ data }) => {
-  const getStyles = (key) => {
-    return data.elements[key]?.styles || {};
-  };
+  const getStyles = (key) => data.elements[key]?.styles || {};
+  const getAttr = (key) => data.elements[key]?.attributes || {};
   return (
-    <header className="header-theme-2">
+    <header className="header-theme-1">
       <img
         data-id="logo"
         data-type="image"
-        src={data.elements.logo.src}
-        alt={data.elements.logo.alt}
+        src={getAttr("logo").src}
+        alt={getAttr("logo").alt}
         style={getStyles("logo")}
       />
 
       <h1 data-id="title" data-type="text" style={getStyles("title")}>
-        {data.elements.title.content}
+        {getAttr("title").content}
       </h1>
 
       <select
@@ -21,7 +20,7 @@ export const Hero = ({ data }) => {
         data-type="dropdown"
         style={getStyles("category_dropdown")}
       >
-        {data.elements.category_dropdown.options.map((opt, index) => (
+        {(getAttr("category_dropdown").options || []).map((opt, index) => (
           <option key={index} value={opt}>
             {opt}
           </option>

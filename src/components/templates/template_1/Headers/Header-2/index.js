@@ -3,16 +3,22 @@ export const Header2Data = {
   category: "header",
   elements: {
     logo: {
-      src: "/assets/img/bg1.png",
-      alt: "لوگو شرکت",
+      attributes: {
+        src: "/assets/img/bg1.png",
+        alt: "هههههه",
+      },
       styles: {},
     },
     title: {
-      content: "هه هه این دو هست",
+      attributes: {
+        content: "ههههههه 2",
+      },
       styles: {},
     },
     category_dropdown: {
-      options: ["محصولات", "خدمات", "پشتیبانی"],
+      attributes: {
+        options: ["محصولات", "خدمات", "پشتیبانی"],
+      },
       styles: {},
     },
   },

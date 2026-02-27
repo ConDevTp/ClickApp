@@ -3,16 +3,22 @@ export const Hero2Data = {
   category: "Hero",
   elements: {
     logo: {
-      src: "/assets/img/bg2.png",
-      alt: "لوگو شرکت",
+      attributes: {
+        src: "/assets/img/bg2.png",
+        alt: "عالت تو",
+      },
       styles: {},
     },
     title: {
-      content: "این هیرو 2 است",
+      attributes: {
+        content: "ههههه من دو بولدم",
+      },
       styles: {},
     },
     category_dropdown: {
-      options: ["محصولات", "خدمات", "پشتیبانی"],
+      attributes: {
+        options: ["محصولات", "خدمات", "فاک هو"],
+      },
       styles: {},
     },
   },

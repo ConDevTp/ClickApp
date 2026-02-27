@@ -44,9 +44,36 @@ const builderSlice = createSlice({
         state.clickedItem.styles[fieldName] = newVal;
       }
     },
+
+    updateElementAttribute: (state, action) => {
+      const { blockId, elementId, fieldName, newVal } = action.payload;
+
+      const targetBlock = state.canvasBlocks.find(
+        (block) => block.instanceId === blockId,
+      );
+
+      if (targetBlock && targetBlock.elements[elementId]) {
+        if (!targetBlock.elements[elementId].attributes) {
+          targetBlock.elements[elementId].attributes = {};
+        }
+        targetBlock.elements[elementId].attributes[fieldName] = newVal;
+      }
+
+      if (state.clickedItem && state.clickedItem.id === elementId) {
+        if (!state.clickedItem.attributes) {
+          state.clickedItem.attributes = {};
+        }
+        state.clickedItem.attributes[fieldName] = newVal;
+      }
+    },
   },
 });
 
-export const { setClickedItem, updateBlock, addBlock, updateElementStyle } =
-  builderSlice.actions;
+export const {
+  setClickedItem,
+  updateBlock,
+  addBlock,
+  updateElementStyle,
+  updateElementAttribute,
+} = builderSlice.actions;
 export const builderSliceReducer = builderSlice.reducer;

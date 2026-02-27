@@ -1,38 +1,60 @@
-import { updateElementStyle } from "@/reducers/builderSlice";
+import {
+  updateElementAttribute,
+  updateElementStyle,
+} from "@/reducers/builderSlice";
+import { AttributeSchema } from "@/schema/AttributeSchema";
 import { FieldSchema } from "@/schema/FieldSchema";
 import { InputComponents } from "@/utils/sidebar";
 import { memo } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
-const ControlWrapper = memo(({ fieldName, blockId, elementId }) => {
-  const dispatch = useDispatch();
-  const value = useSelector(
-    (state) => state.builder.clickedItem?.styles[fieldName],
-  );
+const ControlWrapper = memo(
+  ({ fieldName, blockId, elementId, controlType }) => {
+    const dispatch = useDispatch();
 
-  const handleLiveUpdate = (newVal) => {
-    const blockEl = document.querySelector(`[data-block-id="${blockId}"]`);
-    if (blockEl) {
-      const targetEl = blockEl.querySelector(`[data-id="${elementId}"]`);
-      if (targetEl) targetEl.style[fieldName] = newVal;
-    }
-  };
+    // انتخاب مقدار بر اساس نوع (Style یا Attribute)
+    const value = useSelector(
+      (state) => state.builder.clickedItem?.[controlType]?.[fieldName] || "",
+    );
 
-  const handleSave = (newVal) => {
-    dispatch(updateElementStyle({ blockId, elementId, fieldName, newVal }));
-  };
+    const handleLiveUpdate = (newVal) => {
+      const targetEl = document.querySelector(
+        `[data-block-id="${blockId}"] [data-id="${elementId}"]`,
+      );
+      if (!targetEl) return;
 
-  const InputComponent = InputComponents[fieldName];
-  if (!InputComponent) return null;
+      if (controlType === "styles") {
+        targetEl.style[fieldName] = newVal;
+      } else {
+        // آپدیت زنده محتوا (مثل متن یا عکس)
+        if (fieldName === "content") targetEl.innerText = newVal;
+        else if (fieldName === "src") targetEl.src = newVal;
+        else if (fieldName === "alt") targetEl.alt = newVal;
+      }
+    };
 
-  return (
-    <InputComponent
-      value={value}
-      onChange={handleLiveUpdate}
-      onSave={handleSave}
-    />
-  );
-});
+    const handleSave = (newVal) => {
+      if (controlType === "styles") {
+        dispatch(updateElementStyle({ blockId, elementId, fieldName, newVal }));
+      } else {
+        dispatch(
+          updateElementAttribute({ blockId, elementId, fieldName, newVal }),
+        );
+      }
+    };
+
+    const InputComponent = InputComponents[fieldName];
+    if (!InputComponent) return null;
+
+    return (
+      <InputComponent
+        value={value}
+        onChange={handleLiveUpdate}
+        onSave={handleSave}
+      />
+    );
+  },
+);
 
 const EditorPanel = () => {
   const itemInfo = useSelector((state) => {
@@ -44,23 +66,36 @@ const EditorPanel = () => {
     };
   }, shallowEqual);
 
-  if (!itemInfo) {
-    return (
-      <div className="w-100 h-100 bg-dark text-white d-flex align-items-center justify-content-center">
-        <h4>لطفاً روی یک المان کلیک کنید</h4>
-      </div>
-    );
-  }
+  if (!itemInfo)
+    return <div className="p-5 text-white bg-black">المان را انتخاب کنید</div>;
 
-  const itemFields = FieldSchema[itemInfo.type] || [];
+  const styles = FieldSchema[itemInfo.type] || [];
+  const attributes = AttributeSchema[itemInfo.type] || [];
 
   return (
-    <div className="bg-info w-100 h-100 overflow-scroll">
-      <div className="m-5 p-5">
-        {itemFields.map((fieldName) => (
+    <div className="editor-sidebar">
+      <div className="section">
+        <h5>محتوا</h5>
+        {attributes.map((field) => (
           <ControlWrapper
-            key={fieldName}
-            fieldName={fieldName}
+            key={field}
+            fieldName={field}
+            controlType="attributes"
+            blockId={itemInfo.blockId}
+            elementId={itemInfo.id}
+          />
+        ))}
+      </div>
+
+      <hr />
+
+      <div className="section">
+        <h5>تنظیمات ظاهری</h5>
+        {styles.map((field) => (
+          <ControlWrapper
+            key={field}
+            fieldName={field}
+            controlType="styles"
             blockId={itemInfo.blockId}
             elementId={itemInfo.id}
           />
@@ -69,5 +104,4 @@ const EditorPanel = () => {
     </div>
   );
 };
-
 export default EditorPanel;
