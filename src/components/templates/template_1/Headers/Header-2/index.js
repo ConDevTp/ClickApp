@@ -3,7 +3,7 @@ export const Header2Data = {
   category: "header",
   elements: {
     logo: {
-      src: "/images/logo-v2.png",
+      src: "/assets/img/bg1.png",
       alt: "لوگو شرکت",
       styles: {},
     },

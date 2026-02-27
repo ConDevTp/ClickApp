@@ -3,7 +3,7 @@ export const Hero2Data = {
   category: "Hero",
   elements: {
     logo: {
-      src: "/images/logo-v2.png",
+      src: "/assets/img/bg2.png",
       alt: "لوگو شرکت",
       styles: {},
     },

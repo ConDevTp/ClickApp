@@ -36,10 +36,10 @@ import { parseUnitValue } from "@/utils/canvas";
 import { useEffect, useState } from "react";
 
 const FontSize = ({ value, onChange, onSave }) => {
-  const [localValue, setLocalValue] = useState(value || "16px");
+  const [localValue, setLocalValue] = useState(value);
 
   useEffect(() => {
-    setLocalValue(value || "16px");
+    setLocalValue(value);
   }, [value]);
 
   const { num, unit } = parseUnitValue(localValue, "px");

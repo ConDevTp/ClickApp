@@ -2,15 +2,7 @@ import "./index";
 
 export const Header = ({ data }) => {
   const getStyles = (key) => {
-    const styles = data.elements[key]?.styles || {};
-    return {
-      color: styles["text color"],
-      backgroundColor: styles["background color"],
-      fontSize: styles["font size"],
-      fontFamily: styles["font selection"],
-      lineHeight: styles["font height"],
-      ...styles,
-    };
+    return data.elements[key]?.styles || {};
   };
 
   return (

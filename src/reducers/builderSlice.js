@@ -13,18 +13,19 @@ const builderSlice = createSlice({
       state.clickedItem = action.payload;
     },
 
-    addOrUpdateBlock: (state, action) => {
-      const newBlock = action.payload;
+    addBlock: (state, action) => {
+      state.canvasBlocks.push(action.payload);
+      state.clickedItem = null;
+    },
+
+    updateBlock: (state, action) => {
       const existingIndex = state.canvasBlocks.findIndex(
-        (block) => block.category === newBlock.category,
+        (block) => block.category === action.payload.category,
       );
 
       if (existingIndex !== -1) {
-        state.canvasBlocks[existingIndex] = newBlock;
-      } else {
-        state.canvasBlocks.push(newBlock);
+        state.canvasBlocks[existingIndex] = action.payload;
       }
-
       state.clickedItem = null;
     },
 
@@ -46,6 +47,6 @@ const builderSlice = createSlice({
   },
 });
 
-export const { setClickedItem, addOrUpdateBlock, updateElementStyle } =
+export const { setClickedItem, updateBlock, addBlock, updateElementStyle } =
   builderSlice.actions;
 export const builderSliceReducer = builderSlice.reducer;

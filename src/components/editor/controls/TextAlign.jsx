@@ -15,10 +15,10 @@
 import { useEffect, useState } from "react";
 
 const TextAlign = ({ value, onChange, onSave }) => {
-  const [localValue, setLocalValue] = useState(value || "right");
+  const [localValue, setLocalValue] = useState(value);
 
   useEffect(() => {
-    setLocalValue(value || "right");
+    setLocalValue(value);
   }, [value]);
 
   return (
