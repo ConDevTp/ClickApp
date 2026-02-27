@@ -1,3 +1,16 @@
+/* ۱. غیرفعال کردن کلیک لینک‌ها روی بوم */
 .editor-canvas a {
   pointer-events: none !important;
+}
+
+/* ۲. هاور شدن روی تمام المان‌های قابل انتخاب (عکس، باکس، متن و...) */
+[data-id]:hover {
+  outline: 5px dashed #007bff !important;
+  cursor: pointer !important;
+}
+
+/* ۳. وقتی کاربر داره دقیقاً روی یک متن تایپ می‌کنه */
+[contenteditable="true"]:focus {
+  outline: 6px solid #007bff !important;
+  cursor: text !important;
 }

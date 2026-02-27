@@ -1,3 +1,4 @@
+import { useInlineTextEditor } from "@/hooks/useInlineTextEditor";
 import { setClickedItem } from "@/reducers/builderSlice";
 import { getElementComputedStyles } from "@/utils/canvas";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
@@ -5,7 +6,8 @@ import BlockRenderer from "./BlockRenderer";
 
 const BlocksWrapper = () => {
   const dispatch = useDispatch();
-
+  const { handlePaste, handleKeyDown, handleTextBlur, handleDoubleClick } =
+    useInlineTextEditor();
   const blockIds = useSelector(
     (state) => state.builder.canvasBlocks.map((b) => b.instanceId),
     shallowEqual,
@@ -15,6 +17,7 @@ const BlocksWrapper = () => {
     e.preventDefault();
     const target = e.target.closest("[data-id]");
     if (!target) return;
+
     const id = target.getAttribute("data-id");
     const type = target.getAttribute("data-type");
 
@@ -49,7 +52,14 @@ const BlocksWrapper = () => {
   };
 
   return (
-    <div onClick={handleElementSelect} className="p-5 w-100 bg-secondary">
+    <div
+      onClick={handleElementSelect}
+      onDoubleClick={handleDoubleClick}
+      onBlur={handleTextBlur}
+      onPaste={handlePaste}
+      onKeyDown={handleKeyDown}
+      className="p-5 w-100 bg-secondary"
+    >
       <BlockRenderer blockIds={blockIds} />
     </div>
   );

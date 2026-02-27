@@ -1,5 +1,5 @@
 export const AttributeSchema = {
-  text: ["content"],
+  text: [],
   image: ["src", "alt"],
   link: ["href", "target"],
   dropdown: ["options"],
